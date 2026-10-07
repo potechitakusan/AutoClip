@@ -70,8 +70,9 @@ def run_calibration(config, operation, key='calibration'):
         print(record['message'],flush=True)
         # No minimization on failure; retain the canvas/dialog for recovery.
         raise
-    record.update(state='complete',next_action=info['next_action'],result=relative(result),
-                  message=phrase('complete',stage=stage,next_action=info['next_action']))
+    next_action = info['next_action'].format(project=str(resolve(config['project'])))
+    record.update(state='complete',next_action=next_action,result=relative(result),
+                  message=phrase('complete',stage=stage,next_action=next_action))
     # Persist success before attempting UI feedback. A notification failure must
     # never turn a verified template/copy into a failed calibration.
     write_receipt(config,record,key)

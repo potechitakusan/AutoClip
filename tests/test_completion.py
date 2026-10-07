@@ -5,7 +5,7 @@ import unittest
 import uuid
 from unittest.mock import Mock, patch
 
-from autoclip.common import ROOT, read_json
+from autoclip.common import ROOT, read_json, resolve
 from autoclip.completion import run_calibration
 from autoclip.window_handoff import Handoff, Windows, choose_codex_window
 
@@ -85,6 +85,22 @@ class CompletionTests(unittest.TestCase):
         self.assertEqual(read_json(self.path/'calibration-status.json')['state'],'interrupted')
         html = (self.path/'calibration-status.html').read_text(encoding='utf-8')
         self.assertNotIn('<script>',html);self.assertIn('&lt;script&gt;',html)
+
+    def test_import_completion_identifies_work_copy_in_receipt_and_notification(self):
+        self.config['project'] = 'work/fixture/project/完成作品.cmc'
+        self.config['source_project'] = 'input/original/原本.cmc'
+        with patch('autoclip.completion.Handoff') as handoff,patch('autoclip.completion.notify',return_value=True) as notify,patch('builtins.print') as output:
+            handoff.return_value.finish.return_value = {'clip_minimized':True,'codex_foreground':True}
+            run_calibration(self.config,lambda:self.path/'progress.json',key='import')
+        expected = str(resolve(self.config['project']))
+        receipt = read_json(self.path/'import-status.json')
+        self.assertIn(expected,receipt['next_action'])
+        self.assertIn(expected,receipt['message'])
+        self.assertIn(expected,notify.call_args.args[1])
+        self.assertTrue(any(expected in str(arg) for call in output.call_args_list for arg in call.args))
+        html = (self.path/'import-status.html').read_text(encoding='utf-8')
+        self.assertIn(expected,html)
+        self.assertNotIn(self.config['source_project'],html)
 
     def test_foreground_denied_is_not_misreported_as_calibration_failure(self):
         with patch('autoclip.completion.Handoff') as handoff,patch('autoclip.completion.notify',return_value=False),patch('builtins.print'):

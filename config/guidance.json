@@ -15,7 +15,7 @@
   },
   "import": {
     "stage": "クリスタへの投入",
-    "next_action": "クリスタでCMCを開き、各ページを確認する",
+    "next_action": "クリスタで保存先の作業用CMC「{project}」を開き、各ページを確認する（input内は変更していない原本）",
     "guide": "docs/RUN.html",
     "recovery": "docs/RECOVERY.html"
   },

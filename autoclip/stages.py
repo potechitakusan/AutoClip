@@ -305,7 +305,8 @@ def stage_import(config, page=None, focus=True, **_):
         return work_directory(config) / "progress.json"
 
     run_stage_with_handoff(config, "import", operation)
-    return f"{len(files)} pages saved and layer hierarchy verified"
+    return (f"{len(files)} pages saved and layer hierarchy verified; "
+            f"completed CMC: {resolve(config['project'])}")
 
 
 def status(config):
@@ -344,7 +345,8 @@ def status(config):
     elif complete < len(paths):
         nxt = "run stage import"
     else:
-        nxt = "done: tell the user to open the CMC in CLIP STUDIO and check the pages"
+        nxt = (f"done: open completed CMC {resolve(config['project'])} in CLIP STUDIO; "
+               "input/ is the unchanged original")
     answers = ", ".join(f"{k}={options.get(k)}" for k in ("fit_policy", "upscale", "quality_loss_accepted"))
     lines = [f'job {config["_slug"]}: {sources} images / CMC pages {config["job"].get("cmc_pages", "?")}; answers: {answers}',
              f'profile {"ok" if profile else "MISSING"} | template {"ok" if seeded else "pending"} | analyzed {len(paths)} | '

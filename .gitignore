@@ -5,6 +5,21 @@
 __pycache__/
 *.pyc
 
+# test and coverage artifacts
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# logs
+*.log
+
+# OS and editor settings
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
 # secrets and machine-local settings
 .env
 
