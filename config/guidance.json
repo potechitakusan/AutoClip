@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "messages": {
+    "running": "{stage}を実行しています。完了の案内が出るまでキーボードとマウスを操作しないでください。",
+    "complete": "{stage}が完了しました。次の操作：{next_action}。",
+    "interrupted": "{stage}は完了していません。停止理由：{reason}。復旧手順を確認してください。",
+    "returned": "クリスタを最小化し、AIエージェントのウィンドウに戻りました。",
+    "return_failed": "処理は完了しましたが、画面の復帰を確認できませんでした。タスクバーからAIエージェントを開いてください。"
+  },
+  "calibration": {
+    "stage": "基本枠の作成とページ配布",
+    "next_action": "AIエージェントの案内に従って解析へ進む",
+    "guide": "docs/RUN.html",
+    "recovery": "docs/RECOVERY.html"
+  },
+  "import": {
+    "stage": "クリスタへの投入",
+    "next_action": "クリスタでCMCを開き、各ページを確認する",
+    "guide": "docs/RUN.html",
+    "recovery": "docs/RECOVERY.html"
+  },
+  "profile": {
+    "stage": "画面の校正",
+    "next_action": "AIエージェントの案内に従って基本枠の作成へ進む",
+    "guide": "docs/PROFILE.html",
+    "recovery": "docs/RECOVERY.html"
+  }
+}

@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>画面の校正：ボタンの位置を記録する</title>
+<style>
+:root{color-scheme:light;--ink:#203049;--muted:#58687b;--line:#d7e0e7;--accent:#245c97}*{box-sizing:border-box}body{margin:0;background:#f3f5f7;color:var(--ink);font:16px/1.85 system-ui,"Meiryo",sans-serif}main{max-width:1080px;margin:auto;padding:38px 28px 72px}h1{font-size:30px;line-height:1.5;margin:10px 0 14px}h2{font-size:23px;margin:38px 0 14px}h3{font-size:18px;margin:24px 0 8px}p{margin:10px 0 16px}a{color:#185aab;text-underline-offset:3px}code,pre{font-family:Consolas,monospace}code{overflow-wrap:anywhere}pre{white-space:pre-wrap;overflow-wrap:anywhere;border-radius:8px;background:#223147;color:#f5f8fd;padding:18px 20px;font-size:14px;line-height:1.7}table{border-collapse:collapse;width:100%;background:white}th,td{border-bottom:1px solid var(--line);padding:13px 16px;text-align:left;vertical-align:top}th{font-weight:600;background:#eaf0f6}ul,ol{padding-left:24px}li{margin:8px 0}.eyebrow,.note,footer{font-size:14px;color:var(--muted)}.status{border-left:5px solid #397e69;border-radius:0 8px 8px 0;padding:20px 24px;background:#e7f3ed;margin:24px 0}.status.pending,.status.example{border-color:#ba8528;background:#fff4d9}.status.running{border-color:#3578af;background:#e9f2fb}.status.interrupted{border-color:#b64444;background:#fbecec}.status strong{display:block;font-size:19px}.status p{margin:8px 0 0}.actions,nav,.steps{display:flex;gap:12px;flex-wrap:wrap;margin:20px 0}.actions a{padding:9px 16px;background:white;border:1px solid var(--line);border-radius:6px}.preview{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:8px}.steps span{padding:8px 14px;background:white;border:1px solid var(--line);border-radius:5px}.monitor-row{display:flex;gap:20px;flex-wrap:wrap;margin:18px 0}.monitor{flex:1;min-width:235px;background:white;border:3px solid #90a9bf;border-bottom-width:14px;border-radius:8px;padding:20px}.monitor.primary{border-color:#3b789f}.monitor strong{display:block;font-size:18px}.callout{border:1px solid var(--line);background:white;border-radius:8px;padding:16px 20px}.next{margin-top:34px;border-top:2px solid var(--line);padding-top:16px}footer{margin-top:35px;border-top:1px solid var(--line);padding-top:16px}@media(max-width:600px){main{padding:24px 16px}h1{font-size:25px}td,th{padding:9px;font-size:14px}.status{padding:15px}pre{font-size:13px}}@media print{body{background:white}pre{color:black;background:#f1f3f5}main{max-width:none;padding:0}.status,table,.monitor-row{break-inside:avoid}}
+</style></head><body><main>
+<p class="eyebrow">AutoClip · ユーザー向け手順</p>
+<h1>画面の校正：ボタンの位置を記録する</h1>
+<p>Computer Useを標準とし、ローカルのクリスタへの接続を確認して画面操作・座標登録・コマ枠の分割検証を行います。F8は不要です。</p>
+<section class="status example" aria-label="現在の状態"><strong>校正の手順書</strong><p>このページは実行結果を示しません。初回、および画面・用紙・クリスタが変わった時に行います。</p></section>
+<nav aria-label="ページ内の案内"><a href="#environment">画面設定</a><a href="#procedure">実行手順</a><a href="#recovery">中断時</a><a href="#next">次の操作</a></nav>
+<section id="environment">
+<h2>開始前：ディスプレイとクリスタを揃える</h2>
+<p><strong>画面を操作する処理は、校正（<code>profile record</code>）した時と同じ画面・同じウィンドウ配置でだけ動きます。</strong>推奨は、メイン画面1920×1080・Windowsの拡大縮小100%・クリスタ最大化です。別の解像度・倍率でも使えますが、その条件で校正し直す必要があります。設定を自動で変更する処理はありません。</p>
+<div class="monitor-row"><div class="monitor primary"><strong>メイン画面：クリスタ</strong>横向き・拡大縮小100%を推奨<br>ウィンドウを最大化して固定</div><div class="monitor"><strong>サブ画面：AIエージェント・手順書</strong>拡張表示で使用可能<br>実行中は閲覧だけにし、クリックしない</div></div>
+<table><tr><th>項目</th><th>確認内容</th></tr>
+<tr><td>複数ディスプレイ</td><td>Windowsの「設定 → システム → ディスプレイ」で「識別」を使い、クリスタを置く画面をメインディスプレイにします。番号「1」が必ずメインとは限りません。「表示画面を拡張する」を使い、複製表示は使いません。</td></tr>
+<tr><td>解像度と倍率</td><td>校正時と同じにします。後から変えたら、校正のやり直しです。画面ごとの倍率が異なる場合は、特にウィンドウの移動を避けてください。</td></tr>
+<tr><td>ウィンドウと原稿</td><td>クリスタをメイン画面で最大化し、用紙全体が見える表示倍率にします（開いた時の「全体表示」でよい）。左右パレットの幅・配置を校正時と同じにし、キャンバスの回転・パンをしません。画面をまたぐ配置、左右分割のスナップ表示、全画面表示は使いません。</td></tr>
+<tr><td>タスクバーと文字</td><td>校正時と同じ下端のタスクバー・自動的に隠さない設定を使います。Windowsの文字サイズやクリスタのUIサイズを変更したら再校正します。</td></tr>
+<tr><td>処理中</td><td>別アプリへのクリック、Alt+Tab、ディスプレイ間移動、接続・切断、解像度変更、スリープ、画面ロック、リモートデスクトップへの切り替えを避けます。別画面にあるAIエージェントも、完了するまでは操作しないでください。</td></tr></table>
+<p>設定変更が必要なら、<strong>処理を始める前</strong>に行います。クリスタのパレットや「開く」ダイアログがサブ画面に残っている場合も、開始前にメイン画面へ戻してください。完了時の最小化は、処理が終わったことを知らせるための動作です。</p>
+<p class="note">Windowsの設定項目：[<a href="https://support.microsoft.com/ja-jp/windows/hardware/display-graphics/how-to-use-multiple-monitors-in-windows">複数モニターの使い方（Microsoft）</a>] [<a href="https://support.microsoft.com/ja-jp/windows/hardware/display-graphics/change-your-screen-resolution-and-layout-in-windows">解像度とレイアウトの変更（Microsoft）</a>]</p>
+</section>
+
+<section id="procedure"><h2>画面の校正（プロファイルの記録）</h2>
+<p><strong>Computer Useを使い、AIエージェントがクリスタの画面を見て校正します。</strong>同じデスクトップ接続で画面取得・クリック・入力を続け、観測した操作位置をまとめて登録します。F8は不要です。固定パレット配置との一致も要求しません。</p>
+<p>最初に、エージェントが<strong>ローカルWindowsのクリスタを実際に撮影・操作できる接続</strong>か確認します。ブラウザー専用の接続や別のクラウドデスクトップでは、このクリスタを操作できません。接続できない場合は説明して停止し、代替方式を使うか確認します。</p>
+<p>許可の回数はComputer Use側の承認設定に依存します。部品ごとのシェル実行を減らす構成ですが、許可が不要になる保証はありません。</p>
+<p>次の場合は、記録し直します：画面の解像度・倍率・枚数・位置を変えた、クリスタのバージョンやパレット配置を変えた、用紙サイズを変えた、実行時に「画面・DPI・ツール設定が違う」と止まった。</p>
+
+<h3>始める前に（クリスタ側）</h3>
+<ol><li>上の「ディスプレイとクリスタを揃える」を確認します。クリスタは1つだけ起動し、メイン画面で最大化します。</li>
+<li>「ツール」パレットで<strong>コマ枠ツール</strong>を選び、サブツールパレットで<strong>「コマ枠カット」の「コマフォルダー分割」</strong>を選びます。</li>
+<li>ツールプロパティで、<strong>分割形状＝直線</strong>、<strong>分割方法＝空のフォルダーを作成</strong>にし、<strong>「環境設定の枠線間隔」のチェックを外します</strong>（「左右の間隔」「上下の間隔」の欄が表示されます）。</li>
+<li>ツール・サブツール・ツールプロパティ・レイヤーの各パレットを表示します。レイヤーパレットは右側に置き、4〜5行が見える高さにします。</li>
+<li>環境設定で長さの単位が <strong>px</strong> になっていることを確認します（<a href="SETUP.html">SETUP.html</a>）。</li></ol>
+
+<h3>Computer Useでの校正（標準）</h3>
+<p>エージェントは準備コマンドを実行し、練習用ページをComputer Useで開きます。現在の画面からボタン・入力欄・ツールの位置を調べ、練習用の空のコマ枠を作ります。観測した座標はまとめて登録します。途中で画面が変わったら、必ず新しい画面を確認します。</p>
+<p>位置を調べ終えたら、検証コマンドを1回実行し、色見本の4コマを分割・充填・保存して検査します。検査に合格した場合だけ移送に使います。<strong>この間はキーボードとマウスに触れず待ってください。</strong>解析結果の確認ダイアログが出た時は、ユーザー本人が確認してください。</p>
+<h3>代替の校正（Computer Useが使えず、ユーザーが了承した場合）</h3>
+<p>エージェントが <code>profile agent</code> を使い、校正用画像を段階ごとに見ながら座標を登録します。実行環境によっては、操作ごとに許可が必要になります。Computer Useからこの方式へ勝手に切り替えることはありません。</p>
+<h3>手動記録（ユーザーが希望した場合だけ）</h3>
+<p>AIエージェントが <code>profile record</code> を実行すると、クリスタが前面に出て、練習用のコピーが自動で開きます。<strong>画面下に黒い案内ボックス</strong>が出るので、次を繰り返します（全部で12項目）。</p>
+<ol><li>案内に書かれたボタンやパレットの上に<strong>マウスを置きます（クリックしない）</strong>。</li>
+<li>キーボードの <strong>F8</strong> を押します。F8 はクリスタには届きません。位置が記録され、次の案内に変わります。</li></ol>
+<p>項目の例：「コマ枠フォルダー」ダイアログの線の幅の欄と OK ボタン、レイヤーパレットの1行目・2行目と展開矢印、コマ枠ツールのアイコン、サブツールの2つの項目、ツールプロパティの2つの間隔欄、メニューの「画像」。<strong>OKボタンは押さずに、位置だけを指してください。</strong>途中でメニューやダイアログが自動で開閉します。</p>
+<div class="callout"><p>練習用のコピーは <code>work\作業名\profile\</code> にあり、元の作品には影響しません。他のドキュメントの保存・終了も行いません。</p></div>
+
+<h3>自動の確認</h3>
+<p>記録のあと、同じコピーの上で<strong>色見本の4コマを実際に分割・充填・保存</strong>し、枠の位置・線の太さ・レイヤーの構造を検査します。合格するとプロファイルが「検証済み」になり、解析へ進めます。不合格の場合は理由が表示されるので、その内容に従って記録し直します。</p>
+</section>
+<section id="recovery"><h2>止まったとき</h2>
+<table><tr><th>症状</th><th>対処</th></tr>
+<tr><td>「用紙全体が画面に見えない」</td><td>クリスタで「表示 → 全体表示」にして、用紙がすべて見える状態にします（スクロール・回転をしない）。</td></tr>
+<tr><td>「線の幅が違う」</td><td>環境設定の長さの単位が px か確認し、記録し直します。</td></tr>
+<tr><td>「ツール設定が変わった」</td><td>コマフォルダー分割の設定（直線・空のフォルダー・間隔の欄）を確認します。</td></tr>
+<tr><td>案内ボックスが出ない</td><td>表示の準備が15秒以内に完了しなければ、F8待ちに入らず停止します。原因は <code>work\作業名\profile\teach.window.log</code> に記録されます。AIエージェントに停止理由を伝えてください。</td></tr>
+<tr><td>エージェントがボタンや入力欄を識別できない</td><td>エージェントが現在のスクリーンショットを見たか確認してください。必要なパレットが隠れている場合は表示します。画面画像を取得・閲覧できない環境では、この校正方式は使えません。</td></tr>
+<tr><td>校正中にChatGPTの許可画面などへ切り替わった</td><td>許可操作を終えると、対象のクリスタを前面に戻してから練習用ページを確認します。復帰に時間がかかる場合は最大5回まで再試行します。復帰できず停止した場合は、エージェントが <code>profile agent --step capture</code> で同じ段階の画面を撮り直して再開します。記録を消したり、最初からやり直したりする必要はありません。</td></tr>
+<tr><td>OSから練習用ページ名を取得できない</td><td>エージェントが直近の校正画像で、練習用のアクティブタブの名前と選択状態を確認し、そのタブ領域を補助確認用に登録します。同じプロセス・ウィンドウ・画面設定とタブ画像が一致する場合だけ続行します。別作品名が取得された場合や画像が変わった場合は停止します。この補助確認は、任意のタブを自動認識する機能ではありません。</td></tr>
+<tr><td>途中でクリスタに未保存の練習用ページが残った</td><td>名前が <code>record</code> または <code>verify</code> のタブは練習用です。保存せずに閉じて構いません。</td></tr></table>
+<p>詳しくは <a href="RECOVERY.html">RECOVERY.html</a>。</p>
+</section>
+
+<section class="next" id="next"><h2>次に行う操作</h2><p>準備ができたら、AIエージェントに「校正を始めて」と伝えてください。</p></section>
+<footer>案内の順序：現在の状態 → 開始前の準備 → 実行手順 → 完了の合図 → 中断時 → 次の操作。<br>このページは共通HTMLテンプレートから生成しています。</footer>
+</main></body></html>

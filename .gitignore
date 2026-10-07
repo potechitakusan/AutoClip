@@ -1,0 +1,18 @@
+# local environments and caches
+.venv/
+.venv-tools/
+.cache/
+__pycache__/
+*.pyc
+
+# secrets and machine-local settings
+.env
+
+# user data, generated results and this machine's GUI profile (never published)
+input/
+work/
+output/
+profile/
+models/
+tmp/
+

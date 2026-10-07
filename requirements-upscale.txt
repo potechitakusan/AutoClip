@@ -1,0 +1,5 @@
+# Install the CUDA torch wheel separately; see scripts/setup.ps1.
+torch==2.10.0
+safetensors==0.8.0
+numpy==2.5.3
+pillow==12.3.0

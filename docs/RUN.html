@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>移送の流れと、あなたが行う確認</title>
+<style>
+:root{color-scheme:light;--ink:#203049;--muted:#58687b;--line:#d7e0e7;--accent:#245c97}*{box-sizing:border-box}body{margin:0;background:#f3f5f7;color:var(--ink);font:16px/1.85 system-ui,"Meiryo",sans-serif}main{max-width:1080px;margin:auto;padding:38px 28px 72px}h1{font-size:30px;line-height:1.5;margin:10px 0 14px}h2{font-size:23px;margin:38px 0 14px}h3{font-size:18px;margin:24px 0 8px}p{margin:10px 0 16px}a{color:#185aab;text-underline-offset:3px}code,pre{font-family:Consolas,monospace}code{overflow-wrap:anywhere}pre{white-space:pre-wrap;overflow-wrap:anywhere;border-radius:8px;background:#223147;color:#f5f8fd;padding:18px 20px;font-size:14px;line-height:1.7}table{border-collapse:collapse;width:100%;background:white}th,td{border-bottom:1px solid var(--line);padding:13px 16px;text-align:left;vertical-align:top}th{font-weight:600;background:#eaf0f6}ul,ol{padding-left:24px}li{margin:8px 0}.eyebrow,.note,footer{font-size:14px;color:var(--muted)}.status{border-left:5px solid #397e69;border-radius:0 8px 8px 0;padding:20px 24px;background:#e7f3ed;margin:24px 0}.status.pending,.status.example{border-color:#ba8528;background:#fff4d9}.status.running{border-color:#3578af;background:#e9f2fb}.status.interrupted{border-color:#b64444;background:#fbecec}.status strong{display:block;font-size:19px}.status p{margin:8px 0 0}.actions,nav,.steps{display:flex;gap:12px;flex-wrap:wrap;margin:20px 0}.actions a{padding:9px 16px;background:white;border:1px solid var(--line);border-radius:6px}.preview{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:8px}.steps span{padding:8px 14px;background:white;border:1px solid var(--line);border-radius:5px}.monitor-row{display:flex;gap:20px;flex-wrap:wrap;margin:18px 0}.monitor{flex:1;min-width:235px;background:white;border:3px solid #90a9bf;border-bottom-width:14px;border-radius:8px;padding:20px}.monitor.primary{border-color:#3b789f}.monitor strong{display:block;font-size:18px}.callout{border:1px solid var(--line);background:white;border-radius:8px;padding:16px 20px}.next{margin-top:34px;border-top:2px solid var(--line);padding-top:16px}footer{margin-top:35px;border-top:1px solid var(--line);padding-top:16px}@media(max-width:600px){main{padding:24px 16px}h1{font-size:25px}td,th{padding:9px;font-size:14px}.status{padding:15px}pre{font-size:13px}}@media print{body{background:white}pre{color:black;background:#f1f3f5}main{max-width:none;padding:0}.status,table,.monitor-row{break-inside:avoid}}
+</style></head><body><main>
+<p class="eyebrow">AutoClip · ユーザー向け手順</p>
+<h1>移送の流れと、あなたが行う確認</h1>
+<p>解析から確認・拡大・投入までの流れと、人間が確認する場所です。</p>
+<section class="status example" aria-label="現在の状態"><strong>実行の手順書</strong><p>このページは実行結果を示しません。処理中・完了・中断の状態は、作業先の status.html で確認できます。</p></section>
+<nav aria-label="ページ内の案内"><a href="#procedure">実行手順</a><a href="#completion">完了の合図</a><a href="#next">次の操作</a></nav>
+
+<section id="procedure"><h2>全体の流れ</h2>
+<p>AIエージェントが次の順に進めます。ページ数が増えても、あなたが行う操作は変わりません。</p>
+<h3>設定後は1回のコマンドで実行する</h3>
+<pre>.\autoclip.cmd run all</pre>
+<p>確認者名は<strong>「ユーザー」</strong>が自動で使われるため、名前の入力や毎回の質問はありません。別の名前を使いたい場合だけ <code>--reviewer "名前"</code> を指定します。解析結果を確認する操作は必要です。</p>
+<p>作業設定と<strong>Computer Useによる画面確認・校正</strong>が済んだ状態で実行します。基本枠の準備・解析を順に行い、解析結果HTMLを開きます。<strong>全ページと警告ページを確認した後、確認ダイアログで「はい」を押してください。</strong>そこから拡大・投入・保存・階層検査まで続きます。「いいえ」は移送を始めず停止します。確認をAIが代行することはありません。すでに承認済みの結果は確認ダイアログを省略します。</p>
+<p>未校正の場合は <code>AGENT_CALIBRATION_REQUIRED</code> と表示して停止します。エージェントが <a href="PROFILE.html">PROFILE.html</a> のComputer Use方式で画面を見て校正し、同じ一括コマンドで再開します。画質低下の未了承なども停止します。完成済みページの記録は削除しないでください。GUI処理中は画面に触れず、途中の解析結果確認中だけ操作します。</p>
+<table><tr><th>段階</th><th>内容</th><th>あなたの操作</th></tr>
+<tr><td>1. 質問</td><td>縦横比・拡大・画面について、最初にまとめて質問します。</td><td>答える</td></tr>
+<tr><td>2. 校正</td><td>Computer Useで画面を操作して座標をまとめて登録し、自動検証（<a href="PROFILE.html">PROFILE.html</a>）。</td><td>F8不要。画面に触れず待つ</td></tr>
+<tr><td>3. 基本枠の準備</td><td>1ページ目に基本枠を作り、全ページへ配布します。</td><td>画面に触れない</td></tr>
+<tr><td>4. 解析</td><td>全ページのコマを自動検出します（画像は読み込みません）。</td><td>なし</td></tr>
+<tr><td>5. 確認</td><td><code>output\作業名\index.html</code> を開き、各ページの「左右比較」と「基本枠への配置見本」で、コマの境界・読み順・コマ外の文字を確認します。「要確認」のページは特に見てください。</td><td><strong>確認して、AIに「確認した」と伝える</strong></td></tr>
+<tr><td>6. 拡大</td><td>選んだ方法でコマ画像を拡大（または元画像をそのまま使用）します。</td><td>なし</td></tr>
+<tr><td>7. 投入</td><td>クリスタで各ページに枠を分割し、画像を入れて保存します。1ページ約30秒です。</td><td><strong>画面に触れない</strong></td></tr></table>
+
+<h3>確認で直したいとき</h3>
+<p>コマの追加・削除・座標・読み順は、AIエージェントに「ページ○のコマ△を直したい」と伝えれば、補正ファイルを作って適用します。補正するとそのページの確認は無効になるので、もう一度確認してください。</p>
+
+<h3>配置の仕組み</h3>
+<p>元のコマ群全体を、クリスタの<strong>基本枠</strong>いっぱいに写します。縦と横の比率を別々に合わせるため、元の縦横比と基本枠が違うと、画像がその分だけ縦または横に伸び縮みします（「基本枠への配置見本」で確認できます）。余白を許して縦横比を保つ配置は、まだ使えません。コマ外のタイトルなどは、元の位置のまま別レイヤーに残ります。</p>
+</section>
+<section id="completion"><h2>完了の合図</h2>
+<p>投入が全ページ成功すると、クリスタが最小化され、AIエージェントのウィンドウに戻り、通知が出ます。結果は <code>work\作業名\import-status.html</code> にも残ります。クリスタで <code>.cmc</code> を開いて各ページを確認してください。</p>
+</section>
+
+<section class="next" id="next"><h2>次に行う操作</h2><p>AIエージェントの案内に従って進めてください。確認が必要な段階で、AIから依頼があります。</p></section>
+<footer>案内の順序：現在の状態 → 開始前の準備 → 実行手順 → 完了の合図 → 中断時 → 次の操作。<br>このページは共通HTMLテンプレートから生成しています。</footer>
+</main></body></html>

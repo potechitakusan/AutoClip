@@ -1,0 +1,14 @@
+<section id="recovery"><h2>中断したとき</h2>
+<p><strong>state（<code>work\作業名\state\</code>）やoperationsを削除して再投入しないでください。</strong>完了済みページは、同じコマンドの再実行で検証だけされてスキップされます。最初に、AIエージェントに「状態を確認して」と伝えるか、次を実行します。</p>
+<pre>.\autoclip.cmd status</pre>
+<p>1行目に作業の状況、最後の行に次の操作が出ます。止まった理由は <code>work\作業名\last-error.json</code> と、そこに書かれたログにあります。</p>
+<table><tr><th>症状</th><th>確認・復旧</th></tr>
+<tr><td>前面がクリスタでない／画面を触ってしまった</td><td>処理は安全のため止まります。クリスタのダイアログを閉じ、メイン画面で最大化し、同じコマンドを再実行します。</td></tr>
+<tr><td>「画面・DPI・用紙の位置が違う」</td><td>画面設定を校正時に戻すか、<a href="PROFILE.html">校正をやり直し</a>ます。許容値だけを緩めて進めません。</td></tr>
+<tr><td>投入中に止まったページがある</td><td><code>status</code> に「interrupted」と出ます。ディスク上の保存状態と、クリスタに残った未保存タブの両方を確認します。保存前なら、そのタブを保存せずに閉じ、AIエージェントに再実行を依頼します。保存済みか分からない時は、作業フォルダー全体を別の場所へコピーしてから、AIエージェントに相談してください。</td></tr>
+<tr><td>基本枠のコピー中に止まった</td><td><code>work\作業名\template\seed.json</code> と <code>backups\before-template-copy\</code> を保管します。元のページは退避先に残っています。自動では上書きしません。</td></tr>
+<tr><td>拡大が止まった</td><td>同じ <code>run upscale</code> を再実行します。完成した画像は検証して再利用されます。GPUのメモリ不足は自動でタイルを小さくします。</td></tr>
+<tr><td>完了通知が見えない</td><td><code>work\作業名\import-status.html</code> を開きます。Windowsが通知を抑制している場合があります。</td></tr></table>
+<h3>最初からやり直したいとき</h3>
+<p>別の作業名で <code>configure</code> し直します（<code>work\</code> と <code>output\</code> の既存の作業は残ります）。<code>input\</code> の原本は変更されていません。</p>
+</section>
