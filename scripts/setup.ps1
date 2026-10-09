@@ -11,7 +11,7 @@ function Run-Uv([string[]]$Arguments) {
 if (-not (Test-Path -LiteralPath .venv-tools/Scripts/python.exe)) { Run-Uv -Arguments @('venv','.venv-tools','--python',$Python) }
 Run-Uv -Arguments @('pip','install','--python','.venv-tools/Scripts/python.exe','-r','requirements-tools.txt')
 if (-not $BuiltinUpscale) {
- Write-Output 'Tools environment ready. Next: .\autoclip.cmd scan (input only). Ask about existing ComfyUI / StabilityMatrix and get permission before scan --discover-env.'
+ Write-Output 'Tools environment ready. Next: .\autoclip.cmd setup prepare --cmc <CMC> (docs/SETUP.md).' 
  Write-Output 'Built-in upscaler not installed. Only if selected: .\scripts\setup.ps1 -BuiltinUpscale'
  return
 }
@@ -21,3 +21,5 @@ Run-Uv -Arguments @('pip','install','--python','.venv/Scripts/python.exe','torch
 Run-Uv -Arguments @('pip','install','--python','.venv/Scripts/python.exe','-r','requirements-upscale.txt')
 & .venv/Scripts/python.exe -c "import torch; print('Torch:',torch.__version__,'CUDA:',torch.cuda.is_available())"
 if ($LASTEXITCODE -ne 0) { throw 'Inference environment validation failed' }
+
+Write-Output 'Built-in environment ready. Next: .\autoclip.cmd fetch-model (docs/SETUP.md).'

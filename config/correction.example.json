@@ -1,9 +1,0 @@
-{
-  "note": "コピーして編集。座標は右端・下端を含まないxyxy。人間が補正した場合のみgeometry_checked_byに名前を記入。",
-  "geometry_checked_by": "",
-  "delete": [],
-  "upsert": [
-    {"id": "p002", "reading_order": 3},
-    {"id": "p003", "reading_order": 2}
-  ]
-}

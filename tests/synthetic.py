@@ -92,3 +92,61 @@ def make_project(folder, pages=3, canvas_mm=(182.0, 257.0), dpi=350.0, trim_mm=(
                       ("INSERT INTO Layer VALUES(2, 'Paper', 0, 0, 0, 0, NULL, NULL)", ())]
         (folder / f"page{number:04d}.clip").write_bytes(database(statements))
     return folder / f"{name}.cmc"
+
+
+def make_transparent_page(path, size=(1819, 2551), variant=0, seed=0):
+    """Same page as make_page, but with a transparent paper: only the ink is opaque."""
+    from PIL import ImageChops, ImageOps
+    path = Path(path)
+    white = make_page(path.with_suffix(".tmp.png"), size, variant, seed)
+    with Image.open(white) as page:
+        alpha = ImageOps.invert(page.convert("L")).point(lambda v: 0 if v < 24 else min(255, v * 4))
+    white.unlink()
+    ink = Image.new("RGBA", size, (30, 30, 30, 0))
+    ink.putalpha(alpha)
+    ink.save(path)
+    return path
+
+
+def diagonal_polygons(variant='horizontal'):
+    """Integer, clockwise quadrilaterals in a 100x100 working region."""
+    if variant == 'horizontal':
+        return [[[0,0],[100,0],[100,60],[0,40]], [[0,50],[100,70],[100,100],[0,100]]]
+    if variant == 'vertical':
+        return [[[0,0],[40,0],[60,100],[0,100]], [[50,0],[100,0],[100,100],[70,100]]]
+    if variant == 'nested':
+        return [[[0,0],[40,0],[40,48],[0,40]], [[50,0],[100,0],[100,60],[50,50]],
+                [[0,50],[100,70],[100,100],[0,100]]]
+    if variant == 'windmill':
+        return [[[0,0],[60,0],[50,25],[0,30]], [[70,0],[100,0],[100,60],[75,50]],
+                [[100,70],[100,100],[40,100],[50,75]], [[30,100],[0,100],[0,40],[25,50]]]
+    raise ValueError(variant)
+
+
+def make_diagonal_page(path, variant='horizontal', transparent=False):
+    page = Image.new('RGBA' if transparent else 'RGB',(600,840),
+                     (255,255,255,0) if transparent else 'white')
+    draw = ImageDraw.Draw(page)
+    for poly in diagonal_polygons(variant):
+        # The fixtures, like make_page, describe half-open outer rectangles.
+        xmax,ymax = max(p[0] for p in poly),max(p[1] for p in poly)
+        points = [(40+5*x-(x == xmax),40+7.6*y-(y == ymax)) for x,y in poly]
+        draw.polygon(points,outline='black',width=6)
+    page.save(path)
+    return Path(path)
+
+
+def frame_vector_chunks(polygons):
+    """Build synthetic external chunks for the observed quadrilateral vector encoding."""
+    import struct
+    def chunk(name,body):
+        return name+struct.pack('>Q',len(body))+body
+    result = b''
+    for ident,points in polygons.items():
+        payload = bytearray(452)
+        for k,(x,y) in enumerate(points):
+            struct.pack_into('>dd',payload,100+88*k,x+.001,y+.001)
+        ref = f'vector-{ident}'.encode('ascii')
+        body = struct.pack('>Q',len(ref))+ref+struct.pack('>Q',len(payload))+payload
+        result += chunk(b'CHNKExta',body)
+    return result

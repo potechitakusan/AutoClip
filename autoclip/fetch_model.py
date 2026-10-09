@@ -11,7 +11,7 @@ import subprocess
 import urllib.request
 from pathlib import Path
 
-from .common import CODE_ROOT, resolve, sha256
+from .config import ROOT, sha256
 
 URL = "https://github.com/xinntao/Real-ESRGAN/releases/download/v0.1.0/RealESRGAN_x4plus.pth"
 PTH_SHA256 = "4fa0d38905f75ac06eb49a7951b426670021be3018265fd191d2125df9d682f1"  # official v0.1.0 release asset
@@ -25,14 +25,16 @@ save_file({k: v.contiguous() for k, v in state.items()}, sys.argv[2])
 
 
 def fetch(dest="models"):
-    folder = resolve(dest)
+    folder = Path(dest)
+    if not folder.is_absolute():
+        folder = ROOT / folder
     folder.mkdir(parents=True, exist_ok=True)
     target = folder / "RealESRGAN_x4plus.safetensors"
     if target.is_file():
         return f"already present: {target}"
-    venv = CODE_ROOT / ".venv/Scripts/python.exe"
+    venv = ROOT / ".venv/Scripts/python.exe"
     if not venv.is_file():
-        raise ValueError("Built-in environment missing; run scripts/setup.ps1 -BuiltinUpscale first (docs/SETUP.html)")
+        raise ValueError("Built-in environment missing; run scripts/setup.ps1 -BuiltinUpscale first (docs/SETUP.md)")
     pth = folder / "RealESRGAN_x4plus.pth.download"
     with urllib.request.urlopen(URL, timeout=60) as response, pth.open("wb") as stream:
         digest = hashlib.sha256()

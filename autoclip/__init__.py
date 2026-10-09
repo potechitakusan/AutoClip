@@ -1,3 +1,1 @@
-"""Resumable manga analysis and CLIP STUDIO preparation."""
-
-__version__ = "0.1.0"
+"""AutoClip v2: ページ単位の移送。"""
